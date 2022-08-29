@@ -1,26 +1,21 @@
+import { lazy, Suspense, useState } from 'react';
+import { ClimbingBoxLoader } from 'react-spinners';
 import { ErrorBoundary } from './common/components/ErrorBoundary';
-import { ErrorScreen } from './common/components/ErrorScreen';
-import { SiteLayout } from './layouts/SiteLayout';
-import { BreakThings } from './suspenseSample/components/BreakThings';
-import { Callout } from './suspenseSample/components/Callout';
+import { Agreement } from './main/components/Agreement';
 
-const App = () => (
-  <SiteLayout menu={
-    <ErrorBoundary fallback={ErrorScreen}>
-      <p>Site Layout Menu</p>
-    </ErrorBoundary>
-  }>
-    <ErrorBoundary fallback={ErrorScreen}>
-      <Callout>
-        Callout
-      </Callout>
-    </ErrorBoundary>
-    <ErrorBoundary fallback={ErrorScreen}>
-      <h1>Contents</h1>
-      <p>This is the main part of the example layout.</p>
-      <BreakThings />
-    </ErrorBoundary>
-  </SiteLayout>
-)
+// agree が true になってからダウンロードさせる
+const Main = lazy(() => import('./main/components/Main'))
+
+const App = () => {
+  const [agree, setAgree] = useState(false)
+
+  if (!agree) return <Agreement onAgree={() => { setAgree(true) }} />
+
+  return <ErrorBoundary>
+    <Suspense fallback={<ClimbingBoxLoader />}>
+      <Main />
+    </Suspense>
+  </ErrorBoundary>
+}
 
 export default App;

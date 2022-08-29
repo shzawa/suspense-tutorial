@@ -1,6 +1,8 @@
+import { ReactNode } from "react"
+
 type SiteLayoutProps = {
-  children: React.ReactNode
-  menu: JSX.Element
+  children: ReactNode
+  menu?: ReactNode
 }
 export const SiteLayout: React.FC<SiteLayoutProps> = ({ children, menu = <></> }) => {
   return (

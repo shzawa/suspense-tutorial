@@ -1,8 +1,9 @@
 import { Component, FC, ReactNode } from "react";
+import { ErrorScreen } from "./ErrorScreen";
 
 type ErrorBoundaryProps = {
   children: ReactNode
-  fallback: FC<{ error: Error }>
+  fallback?: FC<{ error: Error }>
 }
 
 type ErrorBoundaryState = {
@@ -20,7 +21,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     const { error } = this.state
     const { children, fallback } = this.props
 
-    if (error) return fallback({ error })
+    if (error) {
+      if (!fallback) return <ErrorScreen error={error} />
+      return fallback({ error })
+    }
     return children
   }
 }

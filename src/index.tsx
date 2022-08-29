@@ -3,16 +3,12 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ErrorBoundary } from './common/components/ErrorBoundary';
-import { ErrorScreen } from './common/components/ErrorScreen';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <React.StrictMode>
-    <ErrorBoundary fallback={ErrorScreen}>
-      <App />
-    </ErrorBoundary>
+    <App />
   </React.StrictMode>
 );
 
